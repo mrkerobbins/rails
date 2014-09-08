@@ -19,12 +19,13 @@ def dash_separator
 end
 
 files = Array.new
+last_path = 0
 
 puts "Files with names that matches <#{ARGV[0]}>"
 tmp = `find .`
 files = tmp.split("\n")
 for i in 0..files.size - 1
-  if files[i] =~ /.*#{Regexp.escape(ARGV[0])}.*[.]([r][b]|[e][r][b])|[j][s]|[c][s][s]|[h][t][m][l]|[y][m][l]|[t][x][t]/
+  if files[i] =~ /.*#{ARGV[0]}.*/
     puts files[i]
   end
 end
@@ -33,14 +34,22 @@ star_separator
 puts "Files with content that matches <#{ARGV[0]}>"
 tmp = `grep -r -i -n #{ARGV[0]}`
 files = tmp.split("\n")
+files.sort!
 for i in 0..files.size - 1
   if files[i] =~ /.*#{Regexp.escape(ARGV[0])}.*[.]([r][b]|[e][r][b])|[j][s]|[c][s][s]|[h][t][m][l]|[y][m][l]|[t][x][t]/
     myfile = files[i].to_s
     path = myfile.slice(0, myfile.index(/[:]\d+[:]/))
-    line_num = myfile.match(/[:]\d+[:]/)
-    line_num = line_num.to_s.slice(1,line_num.length+1)
-    puts "./#{path}"
-    puts "  #{line_num}"
-    dash_separator
+    line_num = myfile.slice(myfile.index(/[:]\d+[:]/)+1, myfile.length)
+    if last_path == 0 and path != last_path
+      puts "./#{path}"
+      puts "  #{line_num}"
+    elsif path != last_path
+      dash_separator
+      puts "./#{path}"
+      puts "  #{line_num}"
+    else
+      puts "  #{line_num}"
+    end
+    last_path = path
   end
 end
