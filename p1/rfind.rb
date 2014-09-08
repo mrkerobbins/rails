@@ -24,6 +24,7 @@ last_path = 0
 puts "Files with names that matches <#{ARGV[0]}>"
 tmp = `find .`
 files = tmp.split("\n")
+files.sort!
 for i in 0..files.size - 1
   if files[i] =~ /.*#{ARGV[0]}.*/
     puts files[i]
@@ -36,7 +37,7 @@ tmp = `grep -r -i -n #{ARGV[0]}`
 files = tmp.split("\n")
 files.sort!
 for i in 0..files.size - 1
-  if files[i] =~ /.*#{Regexp.escape(ARGV[0])}.*[.]([r][b]|[e][r][b])|[j][s]|[c][s][s]|[h][t][m][l]|[y][m][l]|[t][x][t]/
+  if files[i] =~ /.*#{ARGV[0])}.*/
     myfile = files[i].to_s
     path = myfile.slice(0, myfile.index(/[:]\d+[:]/))
     line_num = myfile.slice(myfile.index(/[:]\d+[:]/)+1, myfile.length)
