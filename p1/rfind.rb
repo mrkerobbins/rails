@@ -21,10 +21,26 @@ end
 files = Array.new
 
 puts "Files with names that matches <#{ARGV[0]}>"
-files = `find . -name #{ARGV[0]}`
-puts files
+tmp = `find .`
+files = tmp.split("\n")
+for i in 0..files.size - 1
+  if files[i] =~ /.*#{Regexp.escape(ARGV[0])}.*[.]([r][b]|[e][r][b])|[j][s]|[c][s][s]|[h][t][m][l]|[y][m][l]|[t][x][t]/
+    puts files[i]
+  end
+end
 star_separator
+
 puts "Files with content that matches <#{ARGV[0]}>"
-files = `grep -r -i -n #{ARGV[0]}`
-puts files
-dash_separator
+tmp = `grep -r -i -n #{ARGV[0]}`
+files = tmp.split("\n")
+for i in 0..files.size - 1
+  if files[i] =~ /.*#{Regexp.escape(ARGV[0])}.*[.]([r][b]|[e][r][b])|[j][s]|[c][s][s]|[h][t][m][l]|[y][m][l]|[t][x][t]/
+    myfile = files[i].to_s
+    path = myfile.slice(0, myfile.index(/[:]\d+[:]/))
+    line_num = myfile.match(/[:]\d+[:]/)
+    line_num = line_num.to_s.slice(1,line_num.length+1)
+    puts "./#{path}"
+    puts "  #{line_num}"
+    dash_separator
+  end
+end
