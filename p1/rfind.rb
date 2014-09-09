@@ -26,7 +26,7 @@ tmp = `find .`
 files = tmp.split("\n")
 files.sort!
 for i in 0..files.size - 1
-  if files[i] =~ /.*#{ARGV[0]}.*/
+  if files[i] =~ /.*#{ARGV[0]}.*[.]([h][t][m][l]|[r][b]|[e][r][b]|[j][s]|[c][s][s]|[y][m][l]|[t][x][t])/
     puts files[i]
   end
 end
@@ -35,14 +35,16 @@ star_separator
 puts "Files with content that matches <#{ARGV[0]}>"
 tmp = `grep -r -i -n #{ARGV[0]}`
 files = tmp.split("\n")
+# a loop that uses .map to set a new array of the matches before formatting the 
+# string output and printing it might work wonders here.
 files.sort!
 for i in 0..files.size - 1
-  if files[i] =~ /.*#{ARGV[0])}.*/
+  if files[i] =~ /.*[.]([h][t][m][l]|[r][b]|[e][r][b]|[j][s]|[c][s][s]|[y][m][l]|[t][x][t])/
     myfile = files[i].to_s
     path = myfile.slice(0, myfile.index(/[:]\d+[:]/))
     line_num = myfile.slice(myfile.index(/[:]\d+[:]/)+1, myfile.length)
     if last_path == 0 and path != last_path
-      puts "./#{path}"
+      puts "  ./#{path}"
       puts "  #{line_num}"
     elsif path != last_path
       dash_separator
