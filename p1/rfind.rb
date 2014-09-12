@@ -37,7 +37,6 @@ tmp = `egrep -r -i -n #{ARGV[0]}`
 files = tmp.split("\n")
 # a loop that uses .map to set a new array of the matches before formatting the 
 # string output and printing it might work wonders here.
-files.sort!
 for i in 0..files.size - 1
   if files[i] =~ /.*[.]([h][t][m][l]|[r][b]|[e][r][b]|[j][s]|[c][s][s]|[y][m][l]|[t][x][t])/
     myfile = files[i].to_s
