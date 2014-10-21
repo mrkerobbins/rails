@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+
+#  get 'high_scores/new', to: 'high_scores#new', as: 'new_high_score'
+#  get 'high_scores/:id/edit', to: 'high_scores#edit', as: 'edit_high_score'
+#  get 'high_scores/:id', to:'high_scores#show', as: 'high_score'
+#  get 'high_scores', to: 'high_scores#index', as: 'high_scores'
+#  post 'high_scores', to: 'high_scores#create'
+#  patch 'high_scores/:id', to: 'high_scores#update'
+#  delete 'high_scores/:id', to: 'high_scores#destroy'
+
+  root 'high_scores#index'
+
+  resources :high_scores
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
